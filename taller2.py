@@ -27,4 +27,24 @@ modelo.fit(x_train, y_train)
 #Mostrar coeficientes
 print(f"Coeficientes: {modelo.coef_}")
 print(f"Intercepto: {modelo.intercept_}")
+y_pred = modelo.predict(x_test)
 
+
+#Evaluacion del modelo
+mae = mean_absolute_error(y_test, y_pred)
+mse = mean_squared_error(y_test, y_pred)
+print(f"Error Absoluto Medio: {mae}")
+print(f"Error Cuadratico Medio: {mse}")
+
+
+plt.scatter(y_test, y_pred)
+plt.xlabel('Precios Reales')
+plt.ylabel('Precios Predichos')
+plt.title('Precios Reales vs Precios Predichos')
+plt.show()
+
+#Hacer una prediccioncon nuevos datos
+# Hacer una predicción con nuevos datos
+nueva_casa = pd.DataFrame([[180, 3]], columns=['tamanio', 'habitaciones'])
+prediccion = modelo.predict(nueva_casa)
+print(f"Predicción para una casa de 180 pies cuadrados y 3 habitaciones: {prediccion[0]}")
