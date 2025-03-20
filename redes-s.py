@@ -1,28 +1,28 @@
 import networkx as nx
 import matplotlib.pyplot as plt
-
+# Crear grafo
 G = nx.DiGraph()
 
-#Agregar nodos de profesiones y habilidades
-profesiones = ["Ingeniero", "Doctor", "Programador", "Cientifico de Datos"] 
-habilidades = ["Matematicas", "Programacion", "Analisis de Datos", "Medicina"]
+# Agregar nodos con atributos
+G.add_node("Ana Garcia", tipo="Estudiante", edad=15)
+G.add_node("Juan Perez", tipo="Profesor", departamento="Matematicas")
+G.add_node("Matematicas", tipo="Materia", creditos=4)
+G.add_node("Examen Parcial 1", tipo="Evaluacion", fecha="2021-10-01")
+G.add_node("90", tipo="Calificacion")
+G.add_node("Boletin 1", tipo="Boletin")
 
-G.add_nodes_from(profesiones, color='blue')
-G.add_nodes_from(habilidades, color='green')
+# Agregar aristas relaciones
+G.add_edge("Ana Garcia", "Matematicas", relacion="inscrito en")
+G.add_edge("Juan Perez", "Matematicas", relacion="ensña")
+G.add_edge("Matematicas", "Examen Parcial 1", relacion="Evaluado por")
+G.add_edge("Ana Garcia", "90", relacion="Obtuvo")
+G.add_edge("Examen Parcial 1", "90", relacion="resultado")
+G.add_edge("Ana Garcia", "Boletin 1", relacion="recibio")
+G.add_edge("90", "Boletin 1", relacion="Incluido en")
 
-#Agregar las relaciones 
-
-G.add_edges_from([("Ingeniero", "Matematicas"), 
-                  ("Programador", "Programacion"), 
-                  ("Cientifico de Datos", "Analisis de Datos"),
-                  ("Doctor", "Medicina"),
-                  #("Doctor", "Analisis de Datos"),
-                  ("Cientifico de Datos", "Programacion"),
-                  #("Cientifico de Datos", "Matematicas"),
-                  ("Ingeniero", "Analisis de Datos"), ])
-
-#Dibujar el grafo
+# Dibujar grafo
 plt.figure(figsize=(7, 5))
-nx.draw(G, with_labels=True, node_color="lightblue", edge_color='gray', node_size=2500, font_size=9)
-
+pos = nx.spring_layout(G)
+nx.draw(G, pos, with_labels=True, node_color='skyblue', node_size=2000, edge_color='gray', font_size=6)
+nx.draw_networkx_edge_labels(G, pos, edge_labels=nx.get_edge_attributes(G, 'relacion'), font_color='red', font_size=6)
 plt.show()
